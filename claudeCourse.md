@@ -3,8 +3,29 @@ Opus: higth intelligence, high cost and latency
 sonne: balance, intelligence, cost, spped
 haiku: cost/speed effectice
 
+Accesing claude API
+send a request to Claude's API: API key, model name, messages, and max tokens
+Claude doesn't remember previous messages
+Tokenization: Breaks the text into smaller chunks called tokens.
+app feels slow: Enabling response streaming
+To building an app that needs clean JSON from Claude with no extra text or formatting Combine prefilled messages and stop sequences
+
 system prompts: Esto es sobre tener un aestructura de promts de forma que las respyestas
 esten mejor pensadas, darle un role a claude, decirle que como queremos la respuesta, o que fuentes tomar para docuemnetarse
+
+ChatBot example:
+
+1. TEnemos que crear una funcion para agregar user message a una lista de messages
+2. Creamos una funcion para agregar asistent messages a la lista de mensajes
+3. Esa lista de mensajes siempre tiene que ser enviada a la API de claude para guardar contexto
+4. TAmbien podemos crear un system prompt para que la API sepa cuales son las directrices generales
+   system = "Eres un tutor de ingles que no da las respestas directas sino que trata de blabla"
+   message = client.messages.create(
+   model= model,
+   max_tokens=1000
+   messages =messages
+   system=system
+   )
 
 temperature: esto es sobre que tan creativas son las respuest de claude (0-1)
 
@@ -35,6 +56,17 @@ prompt engeeniring
     - we can use XML tags to wrap up code or documentation, so the model can understand better the prompt
   * multi shot prompting example
     - we can provide diferent kinds of examples or scenarios, so the model can understand better how to responde to the promt
+
+Tool functions
+Tool functions are necesary to write functionality that claude is not able to get, like current date, whether or set a reminder.
+tools schemas helps claude how to call the tool, what arguments needs to send.
+message = client.messages.create(
+model= model,
+max_tokens=1000
+messages =messages
+tools=[get_current_datetime_schema]
+)
+Cuado le enviamos los tools que claude puede usar, en su repuesta ahora nos devolver un toolUseBlock junto al textBlock
 
 RAG (Retrieval augmented generation) and AGENTIC SEARCH
 
